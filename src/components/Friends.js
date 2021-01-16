@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
 import noneProfile from "../../public/images/none-profile.png";
-import bok from "../../public/images/bok.png";
-import bongdol from "../../public/images/bongdol.PNG";
-import tongs from "../../public/images/tongs.jpg";
+// import bok from "../../public/images/bok.png";
+// import bongdol from "../../public/images/bongdol.PNG";
+// import tongs from "../../public/images/tongs.jpg";
+
+import { UserContext } from "../App";
 
 const FriendsWrap = styled.div`
   width: 100%;
@@ -48,6 +50,7 @@ const ProfilePicture = styled.div`
   background-size: 40px;
 
   margin-left: 20px;
+  cursor: pointer;
 `;
 
 const ProfileContent = styled.div`
@@ -74,12 +77,17 @@ const FriendsAccordion = styled.div`
 `;
 
 const Friends = () => {
-  const friendsList = [
-    { name: "복복", content: "밥달라개", src: bok },
-    { name: "봉돌", content: "안녕 ㅎ.ㅎ", src: bongdol },
-    { name: "봉순", src: noneProfile },
-    { name: "텅스", content: "노즈워크 좋아해요~", src: tongs },
-  ];
+  const { userInfo, userDispatch } = useContext(UserContext);
+
+  const clickProfile = (idx) => {
+    const modalWrap = document.querySelector("#modalWrap");
+    modalWrap.classList.remove("hidden");
+
+    userDispatch({
+      type: "selectUser",
+      payload: { idx: idx },
+    });
+  };
 
   return (
     <>
@@ -89,22 +97,29 @@ const Friends = () => {
             <div>친구</div>
             <div>접기</div>
           </FriendsAccordion>
-          {friendsList.map((friend, idx) => {
+          {userInfo.userInfos.map((user, idx) => {
             return (
-              <ProfileWrap key={`profileWrap-${idx}`}>
-                <ProfilePicture
-                  key={`profilePicture-${idx}`}
-                  src={friend.src}
-                ></ProfilePicture>
-                <ProfileContent key={`profileContent-${idx}`}>
-                  <div>{friend.name}</div>
-                  {friend.content !== undefined ? (
-                    <div>{friend.content}</div>
-                  ) : (
-                    <></>
-                  )}
-                </ProfileContent>
-              </ProfileWrap>
+              <>
+                {idx === 0 ? (
+                  <></>
+                ) : (
+                  <ProfileWrap key={`profileWrap-${idx}`}>
+                    <ProfilePicture
+                      key={`profilePicture-${idx}`}
+                      src={user.src}
+                      onClick={() => clickProfile(idx)}
+                    ></ProfilePicture>
+                    <ProfileContent key={`profileContent-${idx}`}>
+                      <div>{user.name}</div>
+                      {user.content !== undefined ? (
+                        <div>{user.content}</div>
+                      ) : (
+                        <></>
+                      )}
+                    </ProfileContent>
+                  </ProfileWrap>
+                )}
+              </>
             );
           })}
         </FriendsInnerWrap>

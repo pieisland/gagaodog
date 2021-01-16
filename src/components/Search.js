@@ -45,7 +45,7 @@ const Search = () => {
               </g>
             </svg>
           </div>
-          <div> 이름 검색</div>
+          <div>이름 검색</div>
         </SearchInnerWrap>
       </SearchWrap>
     </>

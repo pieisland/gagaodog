@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useReducer } from "react";
 import styled from "styled-components";
 import LeftSideBar from "./components/LeftSideBar";
 import Main from "./components/Main";
 import "./common/reset.css";
+import ProfileModal from "./components/ProfileModal";
+
+import neoul from "../public/images/neoul.png";
+import neoulBack from "../public/images/neoul-back.png";
+import noneProfile from "../public/images/none-profile.png";
+import bok from "../public/images/bok.png";
+import bongdol from "../public/images/bongdol.PNG";
+import tongs from "../public/images/tongs.jpg";
+import noneProfileBack from "../public/images/none-profile-back.png";
+
+export const UserContext = React.createContext();
 
 const Wrap = styled.div`
   display: flex;
@@ -10,13 +21,63 @@ const Wrap = styled.div`
   height: 100%;
 `;
 
+function userReducer(state, action) {
+  switch (action.type) {
+    case "selectUser": {
+      return { selIdx: action.payload.idx, userInfos: state.userInfos };
+    }
+    default:
+      return state;
+  }
+}
+
+const userInfos = [
+  {
+    id: 0,
+    name: "너울",
+    content: "안녕하세요~",
+    src: neoul,
+    srcBack: neoulBack,
+  },
+  {
+    id: 1,
+    name: "복복",
+    content: "밥달라개",
+    src: bok,
+    srcBack: noneProfileBack,
+  },
+  {
+    id: 2,
+    name: "봉돌",
+    content: "안녕 ㅎ.ㅎ",
+    src: bongdol,
+    srcBack: noneProfileBack,
+  },
+  { id: 3, name: "봉순", src: noneProfile, srcBack: noneProfileBack },
+  {
+    id: 4,
+    name: "텅스",
+    content: "노즈워크 좋아해요~",
+    src: tongs,
+    srcBack: noneProfileBack,
+  },
+];
+
 const App = () => {
+  const [userInfo, userDispatch] = useReducer(userReducer, {
+    selIdx: 0,
+    userInfos: userInfos,
+  });
+
   return (
     <>
-      <Wrap>
-        <LeftSideBar></LeftSideBar>
-        <Main></Main>
-      </Wrap>
+      <UserContext.Provider value={{ userInfo, userDispatch }}>
+        <Wrap id="mainWrap">
+          <LeftSideBar></LeftSideBar>
+          <Main></Main>
+        </Wrap>
+        <ProfileModal></ProfileModal>
+      </UserContext.Provider>
     </>
   );
 };
