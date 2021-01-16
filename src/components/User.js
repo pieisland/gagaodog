@@ -35,6 +35,8 @@ const ProfilePicture = styled.div`
   background-image: url(${profile});
   background-size: 50px;
   margin-left: 20px;
+
+  cursor: pointer;
 `;
 
 const ProfileContent = styled.div`
@@ -50,12 +52,24 @@ const ProfileContent = styled.div`
   }
 `;
 
+const TmpDiv = styled.div`
+  position: absolute;
+  background-color: black;
+`;
+
+const clickProfile = () => {
+  console.log("user profile click");
+  const modalWrap = document.querySelector("#modalWrap");
+  modalWrap.classList.remove("hidden");
+  //mainWrap.innerHTML += `<TmpDiv>안녕하세용..</TmpDiv>`;
+};
+
 const User = () => {
   return (
     <>
       <UserWrap>
         <UserInnerWrap>
-          <ProfilePicture></ProfilePicture>
+          <ProfilePicture onClick={clickProfile}></ProfilePicture>
           <ProfileContent>
             <div>너울</div>
             <div>안녕하세요</div>
