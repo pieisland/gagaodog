@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import styled from "styled-components";
-import profile from "../../public/images/neoul.png";
+
+import { UserContext } from "../App";
 
 const UserWrap = styled.div`
   width: 100%;
@@ -31,8 +32,8 @@ const ProfilePicture = styled.div`
   height: 50px;
   border-radius: 18px;
   background-color: white;
+  background-image: ${(props) => `url(${props.src})`};
 
-  background-image: url(${profile});
   background-size: 50px;
   margin-left: 20px;
 
@@ -52,27 +53,30 @@ const ProfileContent = styled.div`
   }
 `;
 
-const TmpDiv = styled.div`
-  position: absolute;
-  background-color: black;
-`;
-
-const clickProfile = () => {
-  console.log("user profile click");
-  const modalWrap = document.querySelector("#modalWrap");
-  modalWrap.classList.remove("hidden");
-  //mainWrap.innerHTML += `<TmpDiv>안녕하세용..</TmpDiv>`;
-};
-
 const User = () => {
+  const { userInfo, userDispatch } = useContext(UserContext);
+
+  const clickProfile = (idx) => {
+    const modalWrap = document.querySelector("#modalWrap");
+    modalWrap.classList.remove("hidden");
+
+    userDispatch({
+      type: "selectUser",
+      payload: { idx: idx },
+    });
+  };
+
   return (
     <>
       <UserWrap>
         <UserInnerWrap>
-          <ProfilePicture onClick={clickProfile}></ProfilePicture>
+          <ProfilePicture
+            src={userInfo.userInfos[0].src}
+            onClick={() => clickProfile(0)}
+          ></ProfilePicture>
           <ProfileContent>
-            <div>너울</div>
-            <div>안녕하세요</div>
+            <div>{userInfo.userInfos[0].name}</div>
+            <div>{userInfo.userInfos[0].content}</div>
           </ProfileContent>
         </UserInnerWrap>
       </UserWrap>

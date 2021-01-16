@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import "../common/common.css";
 import styled from "styled-components";
-import profile from "../../public/images/neoul.png";
-import profileBack from "../../public/images/neoul-back.png";
+
+import { UserContext } from "../App";
 
 const Modal = styled.div`
   position: fixed;
@@ -25,16 +25,9 @@ const ModalOverlay = styled.div`
   position: absolute;
 `;
 
-const ModalWrap = styled.div`
-  background-color: blue;
-  position: absolute;
-  width: 80%;
-  height: 80%;
-`;
-
 const ModalContent = styled.div`
   //   background-color: white;
-  background-image: url(${profileBack});
+  background-image: ${(props) => `url(${props.srcBack})`};
 
   //padding: 50px 100px;
   //text-align: center;
@@ -89,15 +82,13 @@ const ModalContentBottom = styled.div`
   justify-content: center;
 `;
 
-const ModalProfilePicture = styled.div``;
-
 const ProfilePicture = styled.div`
   width: 65px;
   height: 65px;
   border-radius: 24px;
   background-color: white;
 
-  background-image: url(${profile});
+  background-image: ${(props) => `url(${props.src})`};
   background-size: 65px;
 
   cursor: pointer;
@@ -139,6 +130,8 @@ const Text = styled.div`
 `;
 
 const ProfileModal = () => {
+  const { userInfo } = useContext(UserContext);
+
   const closeModal = () => {
     document.querySelector("#modalWrap").classList.add("hidden");
   };
@@ -148,7 +141,7 @@ const ProfileModal = () => {
       <div id="modalWrap" className="hidden">
         <Modal>
           <ModalOverlay onClick={closeModal}></ModalOverlay>
-          <ModalContent>
+          <ModalContent srcBack={userInfo.userInfos[userInfo.selIdx].srcBack}>
             <ModalContentTop>
               <TopWrap>
                 <div>
@@ -183,11 +176,17 @@ const ProfileModal = () => {
               </TopWrap>
             </ModalContentTop>
             <ModalContentMiddle>
-              <ProfilePicture></ProfilePicture>
+              <ProfilePicture
+                src={userInfo.userInfos[userInfo.selIdx].src}
+              ></ProfilePicture>
               <ProfileContent>
                 <ContentWrap>
-                  <Text fontSize="12">너울</Text>
-                  <Text fontSize="12">안녕하세요</Text>
+                  <Text fontSize="12">
+                    {userInfo.userInfos[userInfo.selIdx].name}
+                  </Text>
+                  <Text fontSize="12">
+                    {userInfo.userInfos[userInfo.selIdx].content}
+                  </Text>
                 </ContentWrap>
               </ProfileContent>
             </ModalContentMiddle>
