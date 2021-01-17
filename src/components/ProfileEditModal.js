@@ -195,12 +195,12 @@ const ProfileEditModal = () => {
   const func1 = (e) => {
     // console.log(e.target.value);
     // console.log(inputRef.current.value);
-    tempFunc({ name: e.target.value, content: currentContent });
+    tempFunc({ name: e.target.value, content: tempInfo.content });
     //editInfo({ name: e.target.value, content: currentContent });
     //document.querySelector("#inputName").value = currentName;
   };
   const func2 = (e) => {
-    tempFunc({ name: currentName, content: e.target.value });
+    tempFunc({ name: tempInfo.name, content: e.target.value });
     //    editInfo({ name: currentName, content: e.target.value });
   };
 
