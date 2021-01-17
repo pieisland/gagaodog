@@ -19,7 +19,7 @@ const FriendsWrap = styled.div`
 `;
 
 const FriendsInnerWrap = styled.div`
-  //background-color: purple;
+  // background-color: purple;
   //   position: absoulte;
   width: 100%;
   height: 100%;
@@ -29,7 +29,7 @@ const FriendsInnerWrap = styled.div`
 `;
 
 const ProfileWrap = styled.div`
-  //background-color: red;
+  // background-color: red;
   display: flex;
   align-items: center;
   width: 100%;
@@ -77,7 +77,7 @@ const FriendsAccordion = styled.div`
 `;
 
 const Friends = () => {
-  const { userInfo, userDispatch } = useContext(UserContext);
+  const { userInfo, userDispatch, tempFunc } = useContext(UserContext);
 
   const clickProfile = (idx) => {
     const modalWrap = document.querySelector("#modalWrap");
@@ -87,6 +87,15 @@ const Friends = () => {
       type: "selectUser",
       payload: { idx: idx },
     });
+
+    tempFunc({
+      name: userInfo.userInfos[idx].name,
+      content: userInfo.userInfos[idx].content,
+    });
+  };
+
+  const openChat = () => {
+    console.log("open chat");
   };
 
   return (
@@ -103,7 +112,10 @@ const Friends = () => {
                 {idx === 0 ? (
                   <></>
                 ) : (
-                  <ProfileWrap key={`profileWrap-${idx}`}>
+                  <ProfileWrap
+                    key={`profileWrap-${idx}`}
+                    onDoubleClick={() => openChat()}
+                  >
                     <ProfilePicture
                       key={`profilePicture-${idx}`}
                       src={user.src}

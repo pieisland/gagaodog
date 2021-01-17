@@ -1,9 +1,10 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useState } from "react";
 import styled from "styled-components";
 import LeftSideBar from "./components/LeftSideBar";
 import Main from "./components/Main";
 import "./common/reset.css";
 import ProfileModal from "./components/ProfileModal";
+import ProfileEditModal from "./components/ProfileEditModal";
 
 import neoul from "../public/images/neoul.png";
 import neoulBack from "../public/images/neoul-back.png";
@@ -25,6 +26,16 @@ function userReducer(state, action) {
   switch (action.type) {
     case "selectUser": {
       return { selIdx: action.payload.idx, userInfos: state.userInfos };
+    }
+    case "setUserInfo": {
+      const newUserInfos = state.userInfos.map((info) => {
+        if (info.id === state.selIdx) {
+          info.name = action.payload.name;
+          info.content = action.payload.content;
+          return info;
+        } else return info;
+      });
+      return { selIdx: state.selIdx, userInfos: newUserInfos };
     }
     default:
       return state;
@@ -53,7 +64,13 @@ const userInfos = [
     src: bongdol,
     srcBack: noneProfileBack,
   },
-  { id: 3, name: "봉순", src: noneProfile, srcBack: noneProfileBack },
+  {
+    id: 3,
+    name: "봉순",
+    src: noneProfile,
+    content: "",
+    srcBack: noneProfileBack,
+  },
   {
     id: 4,
     name: "텅스",
@@ -69,14 +86,19 @@ const App = () => {
     userInfos: userInfos,
   });
 
+  const [tempInfo, tempFunc] = useState({ name: "", content: "" });
+
   return (
     <>
-      <UserContext.Provider value={{ userInfo, userDispatch }}>
+      <UserContext.Provider
+        value={{ userInfo, userDispatch, tempInfo, tempFunc }}
+      >
         <Wrap id="mainWrap">
           <LeftSideBar></LeftSideBar>
           <Main></Main>
         </Wrap>
         <ProfileModal></ProfileModal>
+        <ProfileEditModal></ProfileEditModal>
       </UserContext.Provider>
     </>
   );
