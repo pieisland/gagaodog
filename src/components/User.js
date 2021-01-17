@@ -6,7 +6,7 @@ import { UserContext } from "../App";
 const UserWrap = styled.div`
   width: 100%;
   height: 70px;
-  //background-color: brown;
+  // background-color: brown;
 
   display: flex;
   justify-content: center;
@@ -54,7 +54,7 @@ const ProfileContent = styled.div`
 `;
 
 const User = () => {
-  const { userInfo, userDispatch } = useContext(UserContext);
+  const { userInfo, userDispatch, tempFunc } = useContext(UserContext);
 
   const clickProfile = (idx) => {
     const modalWrap = document.querySelector("#modalWrap");
@@ -64,11 +64,24 @@ const User = () => {
       type: "selectUser",
       payload: { idx: idx },
     });
+    tempFunc({
+      name: userInfo.userInfos[idx].name,
+      content: userInfo.userInfos[idx].content,
+    });
+  };
+
+  const openChat = () => {
+    console.log("open chat");
+
+    userDispatch({
+      type: "selectUser",
+      payload: { idx: idx },
+    });
   };
 
   return (
     <>
-      <UserWrap>
+      <UserWrap onDoubleClick={() => openChat()}>
         <UserInnerWrap>
           <ProfilePicture
             src={userInfo.userInfos[0].src}
