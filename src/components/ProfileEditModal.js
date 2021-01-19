@@ -28,17 +28,10 @@ const ModalOverlay = styled.div`
 const ModalContent = styled.div`
   background-color: white;
 
-  //padding: 50px 100px;
-  //text-align: center;
-
   position: relative;
-
-  //border-radius: 10px;
   width: 250px;
   height: 80%;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
-
-  //  background-image = url();
 
   display: flex;
   flex-direction: column;
@@ -163,19 +156,8 @@ const ProfileEditModal = () => {
   );
   let currentName = userInfo.userInfos[userInfo.selIdx].name;
   let currentContent = userInfo.userInfos[userInfo.selIdx].content;
-  //console.log("currentInfo", currentName, currentContent);
-  //console.log("tempInfo", tempInfo);
 
   const inputRef = useRef(false);
-
-  /*const [myinfo, editInfo] = useState({
-    name: currentName,
-    content: currentContent,
-  });
-
-  console.log("myinfo", myinfo.name, myinfo.content);*/
-  //이것때문에 재렌더링 또 렌더링 또렌더링 때문에 안되는 거 아님?
-  //editInfo({ name: currentName, content: currentContent });
 
   const closeModal = () => {
     document.querySelector("#modalWrap2").classList.add("hidden");
@@ -196,12 +178,10 @@ const ProfileEditModal = () => {
     // console.log(e.target.value);
     // console.log(inputRef.current.value);
     tempFunc({ name: e.target.value, content: tempInfo.content });
-    //editInfo({ name: e.target.value, content: currentContent });
-    //document.querySelector("#inputName").value = currentName;
   };
+
   const func2 = (e) => {
     tempFunc({ name: tempInfo.name, content: e.target.value });
-    //    editInfo({ name: currentName, content: e.target.value });
   };
 
   return (
@@ -243,9 +223,6 @@ const ProfileEditModal = () => {
                 <Input
                   id="inputName"
                   type="text"
-                  //   value={myinfo.name}
-                  //   value={userInfo.userInfos[userInfo.selIdx].name}
-                  //   value={currentName}
                   value={tempInfo.name}
                   ref={inputRef}
                   onChange={func1}
@@ -255,15 +232,8 @@ const ProfileEditModal = () => {
                 <Input
                   id="inputContent"
                   type="text"
-                  //value={myinfo.content}
-                  //value="멍멍"
                   value={
                     tempInfo.content
-                    // currentContent
-                    //myinfo.content
-                    // userInfo.userInfos[userInfo.selIdx].content
-                    //   ? userInfo.userInfos[userInfo.selIdx].content
-                    //   : ""
                   }
                   onChange={func2}
                 ></Input>
