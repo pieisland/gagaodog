@@ -169,6 +169,12 @@ const ProfileModal = () => {
     document.querySelector("#modalWrap2").classList.remove("hidden");
   };
 
+  const showChattingModal = () => {
+    console.log("채팅");
+    document.querySelector("#modalWrap").classList.add("hidden");
+    document.querySelector("#modalWrap3").classList.remove("hidden");
+  };
+
   return (
     <>
       <div id="modalWrap" className="hidden">
@@ -230,7 +236,7 @@ const ProfileModal = () => {
             </ModalContentMiddle>
             <ModalContentBottom>
               <ModalContentBottomInnerWrap>
-                <BottomInnerThree>
+                <BottomInnerThree onClick={showChattingModal}>
                   <div>
                     <svg
                       id="chat"

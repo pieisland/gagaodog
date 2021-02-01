@@ -5,6 +5,7 @@ import Main from "./components/Main";
 import "./common/reset.css";
 import ProfileModal from "./components/ProfileModal";
 import ProfileEditModal from "./components/ProfileEditModal";
+import ChattingModal from "./components/ChattingModal";
 
 import neoul from "../public/images/neoul.png";
 import neoulBack from "../public/images/neoul-back.png";
@@ -99,6 +100,7 @@ const App = () => {
         </Wrap>
         <ProfileModal></ProfileModal>
         <ProfileEditModal></ProfileEditModal>
+        <ChattingModal></ChattingModal>
       </UserContext.Provider>
     </>
   );
