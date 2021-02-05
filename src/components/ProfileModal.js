@@ -170,7 +170,7 @@ const ProfileModal = () => {
   };
 
   const showChattingModal = () => {
-    console.log("채팅");
+    // console.log("채팅");
     document.querySelector("#modalWrap").classList.add("hidden");
     document.querySelector("#modalWrap3").classList.remove("hidden");
   };
@@ -228,6 +228,7 @@ const ProfileModal = () => {
                   <Text fontSize="12">
                     {userInfo.userInfos[userInfo.selIdx].name}
                   </Text>
+                  {/* {userInfo.selIdx === 0 ? <></> : <div>수정</div>} */}
                   <Text fontSize="12">
                     {userInfo.userInfos[userInfo.selIdx].content}
                   </Text>
@@ -241,7 +242,7 @@ const ProfileModal = () => {
                     <svg
                       id="chat"
                       width="20"
-                      height="20"
+                      height="25"
                       viewBox="0, 0, 400,400"
                       fill="white"
                     >
@@ -250,8 +251,11 @@ const ProfileModal = () => {
                       </g>
                     </svg>
                   </div>
-                  <Text fontSize="5">나와의 채팅</Text>
+                  <Text fontSize="5">
+                    {userInfo.selIdx === 0 ? <>나와의 채팅</> : <>1:1 채팅</>}
+                  </Text>
                 </BottomInnerThree>
+                {/* {userInfo.selIdx === 0 ? ( */}
                 <BottomInnerThree onClick={editProfile}>
                   <div>
                     <EditSvg
@@ -269,8 +273,14 @@ const ProfileModal = () => {
                       </g>
                     </EditSvg>
                   </div>
-                  <Text fontSize="5">프로필 관리</Text>
+                  <Text fontSize="5">
+                    {userInfo.selIdx === 0 ? <>프로필 관리</> : <>이름 수정</>}
+                  </Text>
                 </BottomInnerThree>
+                {/* ) : (
+                  <></>
+                )} */}
+
                 <BottomInnerThree>
                   <div>
                     <svg
