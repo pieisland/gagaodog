@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import styled from "styled-components";
 import noneProfile from "../../public/images/none-profile.png";
 // import bok from "../../public/images/bok.png";
@@ -78,6 +78,9 @@ const FriendsAccordion = styled.div`
 
 const Friends = () => {
   const { userInfo, userDispatch, tempFunc } = useContext(UserContext);
+  const [foldStatus, setFoldStatus] = useState(false);
+
+  //console.log(userInfo);
 
   const clickProfile = (idx) => {
     const modalWrap = document.querySelector("#modalWrap");
@@ -98,42 +101,62 @@ const Friends = () => {
     console.log("open chat");
   };
 
+  const changeFoldStatus = () => {
+    const btn = document.querySelector("#foldBtn");
+    if (foldStatus) {
+      //접혀있으면
+      setFoldStatus(false); //펼치고
+      btn.innerText = "접기";
+    } else {
+      setFoldStatus(true);
+      btn.innerText = "펼치기";
+    } //펼쳐져있으면 접는다.
+  };
+
   return (
     <>
       <FriendsWrap>
         <FriendsInnerWrap>
           <FriendsAccordion>
-            <div>친구</div>
-            <div>접기</div>
+            <div>친구 {userInfo.userInfos.length - 1}</div>
+            <div id="foldBtn" onClick={() => changeFoldStatus()}>
+              접기
+            </div>
           </FriendsAccordion>
-          {userInfo.userInfos.map((user, idx) => {
-            return (
-              <>
-                {idx === 0 ? (
-                  <></>
-                ) : (
-                  <ProfileWrap
-                    key={`profileWrap-${idx}`}
-                    onDoubleClick={() => openChat()}
-                  >
-                    <ProfilePicture
-                      key={`profilePicture-${idx}`}
-                      src={user.src}
-                      onClick={() => clickProfile(idx)}
-                    ></ProfilePicture>
-                    <ProfileContent key={`profileContent-${idx}`}>
-                      <div>{user.name}</div>
-                      {user.content !== undefined ? (
-                        <div>{user.content}</div>
-                      ) : (
-                        <></>
-                      )}
-                    </ProfileContent>
-                  </ProfileWrap>
-                )}
-              </>
-            );
-          })}
+          {foldStatus ? (
+            <></>
+          ) : (
+            <>
+              {userInfo.userInfos.map((user, idx) => {
+                return (
+                  <>
+                    {idx === 0 ? (
+                      <></>
+                    ) : (
+                      <ProfileWrap
+                        key={`profileWrap-${idx}`}
+                        onDoubleClick={() => openChat()}
+                      >
+                        <ProfilePicture
+                          key={`profilePicture-${idx}`}
+                          src={user.src}
+                          onClick={() => clickProfile(idx)}
+                        ></ProfilePicture>
+                        <ProfileContent key={`profileContent-${idx}`}>
+                          <div>{user.name}</div>
+                          {user.content !== undefined ? (
+                            <div>{user.content}</div>
+                          ) : (
+                            <></>
+                          )}
+                        </ProfileContent>
+                      </ProfileWrap>
+                    )}
+                  </>
+                );
+              })}
+            </>
+          )}
         </FriendsInnerWrap>
       </FriendsWrap>
     </>
